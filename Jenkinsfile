@@ -36,7 +36,7 @@ pipeline {
                 sh 'docker rm mynginx || true'
 
                 // Deploy the newly built custom Nginx Docker image as an Nginx container
-                sh "docker run -d -p 81:80 --name my-nginx ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                sh "docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
     }
