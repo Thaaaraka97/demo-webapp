@@ -1,0 +1,20 @@
+version: '3'
+services:
+  jenkins:
+    image: myjenkins:latest
+    ports:
+      - "8080:8080" # Map Jenkins web interface to host port 8080
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock # Mount Docker socket for Jenkins to interact with Docker on the host
+
+  nginx:
+    build:
+      context: . # Use the current directory as the build context for the custom Nginx image
+      dockerfile: Dockerfile.nginx # Use the custom Dockerfile for Nginx
+    ports:
+      - "81:80" # Map Nginx web server to host port 80
+
+volumes:
+  jenkins_data: # Jenkins data volume to persist Jenkins configurations
+
