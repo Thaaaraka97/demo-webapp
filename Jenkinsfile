@@ -65,10 +65,10 @@ pipeline {
                 // }
 
                 sh 'ssh -i .ssh/id_rsa 10.0.30.43'
-                sh 'docker stop mynginx || true'
-                sh 'docker rm mynginx || true'
-                sh 'docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
-                sh 'docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                sh 'sudo docker stop mynginx || true'
+                sh 'sudo docker rm mynginx || true'
+                sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
             }
         }
     }
