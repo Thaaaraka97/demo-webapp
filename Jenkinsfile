@@ -3,9 +3,13 @@ pipeline {
 
     environment {
         // Define the Docker image name and tag
-        DOCKER_IMAGE = "custom_nginx_for_webapp" // Use the custom Nginx Docker image name
+        DOCKER_IMAGE = "thaaaraka/custom_nginx_for_webapp" // Use the custom Nginx Docker image name
         DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
+
+        TARGET_VM_IP = "ec2-99-79-39-233.ca-central-1.compute.amazonaws.com" // Replace with the IP of the target VM
+        SSH_USER = "ubuntu" // Replace with the SSH username on the target VM
+        SSH_PRIVATE_KEY = credentials('ssh_private_key_id') // Add the Jenkins SSH private key credential ID
     }
 
     stages {
@@ -37,13 +41,28 @@ pipeline {
         }
 
         stage('Deploy to Nginx Container') {
-            steps {
-                // Stop and remove the existing Nginx container
-                sh 'docker stop custom_nginx_for_webapp || true'
-                sh 'docker rm custom_nginx_for_webapp || true'
+            // steps {
+            //     // Stop and remove the existing Nginx container
+            //     sh 'docker stop custom_nginx_for_webapp || true'
+            //     sh 'docker rm custom_nginx_for_webapp || true'
 
-                // Deploy the newly built custom Nginx Docker image as an Nginx container
-                sh "docker run -d -p 81:80 --name custom_nginx_for_webapp ${DOCKER_IMAGE}:${DOCKER_TAG}"
+            //     // Deploy the newly built custom Nginx Docker image as an Nginx container
+            //     sh "docker run -d -p 81:80 --name custom_nginx_for_webapp ${DOCKER_IMAGE}:${DOCKER_TAG}"
+            // }
+            steps {
+                // SSH into the target VM and deploy the Nginx container
+                script {
+                    sshCommand remote: [
+                        host: TARGET_VM_IP,
+                        user: SSH_USER,
+                        identityFile: SSH_PRIVATE_KEY
+                    ], script: """
+                        docker stop mynginx || true
+                        docker rm mynginx || true
+                        docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
+                        docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}
+                    """
+                }
             }
         }
     }
