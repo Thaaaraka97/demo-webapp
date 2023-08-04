@@ -64,6 +64,8 @@ pipeline {
                 //     """
                 // }
 
+                sh 'sudo -u ubuntu whoami'
+
                 sh 'ssh -i .ssh/id_rsa 10.0.30.43'
                 sh 'sudo docker stop mynginx || true'
                 sh 'sudo docker rm mynginx || true'
