@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define the Docker image name and tag
-        DOCKER_IMAGE = "mynginx" // Use the custom Nginx Docker image name
+        DOCKER_IMAGE = "custom_nginx_for_webapp" // Use the custom Nginx Docker image name
         DOCKER_TAG = "latest"
     }
 
@@ -19,13 +19,13 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 // Build the custom Nginx Docker image using the provided Dockerfile
-                // script {
-                //     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                //         def customImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}", "-f Dockerfile.nginx .")
-                //         customImage.push()
-                //     }
-                // }
-                sh 'docker build -t mynginx:latest . || true'
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                        def customImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}", " .")
+                        customImage.push()
+                    }
+                }
+                // sh 'docker build -t mynginx:latest . || true'
             }
         }
 
