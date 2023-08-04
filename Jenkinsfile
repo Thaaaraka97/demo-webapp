@@ -20,7 +20,7 @@ pipeline {
             steps {
                 // Build the custom Nginx Docker image using the provided Dockerfile
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
                         def customImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}", " .")
                         customImage.push()
                     }
