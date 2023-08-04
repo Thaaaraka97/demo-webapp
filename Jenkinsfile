@@ -25,7 +25,7 @@ pipeline {
                 //         customImage.push()
                 //     }
                 // }
-                sh 'docker build -t mynginx:latest /home/ubuntu/. || true'
+                sh 'docker build -t mynginx:latest -f /home/ubuntu/ . || true'
             }
         }
 
