@@ -30,7 +30,7 @@ pipeline {
                 
                 sh 'docker build -t custom_nginx_for_webapp:latest .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push thaaaraka/custom_nginx_for_webapp:latest'
+                sh 'docker push custom_nginx_for_webapp:latest'
                 sh 'docker logout'
                 
             }
