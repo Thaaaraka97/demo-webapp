@@ -25,18 +25,18 @@ pipeline {
                 //         customImage.push()
                 //     }
                 // }
-                sh 'docker build mynginx -f Dockerfile.nginx || true'
+                sh 'sudo docker build mynginx -f Dockerfile.nginx || true'
             }
         }
 
         stage('Deploy to Nginx Container') {
             steps {
                 // Stop and remove the existing Nginx container
-                sh 'docker stop mynginx || true'
-                sh 'docker rm mynginx || true'
+                sh 'sudo docker stop mynginx || true'
+                sh 'sudo docker rm mynginx || true'
 
                 // Deploy the newly built custom Nginx Docker image as an Nginx container
-                sh "docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                sh "sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
     }
