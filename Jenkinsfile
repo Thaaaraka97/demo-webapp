@@ -50,19 +50,25 @@ pipeline {
             //     sh "docker run -d -p 81:80 --name custom_nginx_for_webapp ${DOCKER_IMAGE}:${DOCKER_TAG}"
             // }
             steps {
-                // SSH into the target VM and deploy the Nginx container
-                script {
-                    sshCommand remote: [
-                        host: TARGET_VM_IP,
-                        user: SSH_USER,
-                        identityFile: SSH_PRIVATE_KEY
-                    ], script: """
-                        docker stop mynginx || true
-                        docker rm mynginx || true
-                        docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
-                        docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}
-                    """
-                }
+                // SSH into the target VM and deploy the Nginx container                
+                // script {
+                //     sshCommand remote: [
+                //         host: TARGET_VM_IP,
+                //         user: SSH_USER,
+                //         identityFile: SSH_PRIVATE_KEY
+                //     ], script: """
+                //         docker stop mynginx || true
+                //         docker rm mynginx || true
+                //         docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
+                //         docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}
+                //     """
+                // }
+
+                sh 'ssh -i .ssh/id_rsa 10.0.30.43'
+                sh 'docker stop mynginx || true'
+                sh 'docker rm mynginx || true'
+                sh 'docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                sh 'docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
             }
         }
     }
