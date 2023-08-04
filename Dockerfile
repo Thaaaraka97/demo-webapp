@@ -4,9 +4,6 @@ FROM nginx:latest
 # Remove the default Nginx configuration
 #RUN rm /etc/nginx/conf.d/default.conf
 
-# Remove the default Nginx html files
-RUN rm /usr/share/nginx/html/
-
 # Copy your Nginx custom configuration
 #COPY ./path/to/your/nginx/conf /etc/nginx
 
