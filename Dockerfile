@@ -12,10 +12,10 @@ RUN apt-get update && \
     apt-get install -y git
 
 # Clone your web app code from the GitHub repository
-RUN git clone https://github.com/Thaaaraka97/demo-webapp.git /tmp/webapp
+#RUN git clone https://github.com/Thaaaraka97/demo-webapp.git /tmp/webapp
 
 # Copy the contents of your web app code into the existing /usr/share/nginx/html directory
-RUN cp -R /tmp/webapp/. /usr/share/nginx/html
+COPY index.html /usr/share/nginx/html/
 
 # Clean up temporary directory
-RUN rm -rf /tmp/webapp
+#RUN rm -rf /tmp/webapp
