@@ -28,9 +28,9 @@ pipeline {
                 // }
 
                 
-                sh 'docker build -t mynginx:latest .'
+                sh 'docker build -t custom_nginx_for_webapp:latest .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push mynginx:latest'
+                sh 'docker push docker push thaaaraka/custom_nginx_for_webapp:latest'
                 sh 'docker logout'
                 
             }
@@ -39,11 +39,11 @@ pipeline {
         stage('Deploy to Nginx Container') {
             steps {
                 // Stop and remove the existing Nginx container
-                sh 'docker stop mynginx || true'
-                sh 'docker rm mynginx || true'
+                sh 'docker stop custom_nginx_for_webapp || true'
+                sh 'docker rm custom_nginx_for_webapp || true'
 
                 // Deploy the newly built custom Nginx Docker image as an Nginx container
-                sh "docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                sh "docker run -d -p 81:80 --name custom_nginx_for_webapp ${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
     }
