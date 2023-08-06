@@ -51,29 +51,28 @@ pipeline {
             // }
             steps {
                 // SSH into the target VM and deploy the Nginx container                
-                // script {
-                //     sshCommand remote: [
-                //         host: TARGET_VM_IP,
-                //         user: SSH_USER,
-                //         identityFile: SSH_PRIVATE_KEY
-                //     ], script: """
-                //         docker stop mynginx || true
-                //         docker rm mynginx || true
-                //         docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
-                //         docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}
-                //     """
-                // }
+                
 
                 
 
                 // sh 'ssh -i .ssh/id_rsa 10.0.30.43'
-                sh 'ssh ubuntu@10.0.30.43'
-                sh 'whoami'
-                sh 'hostname'
                 // sh 'sudo docker stop mynginx || true'
                 // sh 'sudo docker rm mynginx || true'
                 // sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 // sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
+
+                withCredentials([
+                    sshUserPrivateKey(credentialsId: 'test', keyFileVariable: 'SSH_KEY', passphraseVariable: '', usernameVariable: 'USERNAME')
+                ]) {
+                    script {
+                        // Steps executed with the specified user's credentials and SSH private key
+
+                        echo "This stage is running with the specified user"
+                        
+                        // Your steps that need to be run with a different user and SSH key go here
+                        sh "whoami"
+                        // sh "ssh -i \$SSH_KEY user@your-remote-host 'command-to-execute-on-remote-host'"
+                    }
             }
         }
     }
