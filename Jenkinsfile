@@ -72,6 +72,7 @@ pipeline {
                         // Your steps that need to be run with a different user and SSH key go here
                         sh "whoami"
                         // sh "ssh -i \$SSH_KEY user@your-remote-host 'command-to-execute-on-remote-host'"
+                        }
                     }
             }
         }
