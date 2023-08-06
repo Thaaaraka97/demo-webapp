@@ -60,10 +60,11 @@ pipeline {
                 #!/bin/bash
                 ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.30.43 << EOF
                 hostname
-                sh 'docker stop mynginx || true'
-                sh 'docker rm mynginx || true'
-                sh 'docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
-                sh 'docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                docker stop mynginx || true
+                docker rm mynginx || true
+                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
+                docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}
                 exit 0
                 << EOF
 
