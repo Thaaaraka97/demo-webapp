@@ -58,7 +58,7 @@ pipeline {
                 sh """
 
                 #!/bin/bash
-                sudo ssh -i .ssh/id_rsa 10.0.18.137 << EOF
+                ssh -i .ssh/id_rsa 10.0.18.137 << EOF
                 hostname
                 exit 0
                 << EOF
