@@ -61,7 +61,7 @@ pipeline {
                 // sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 // sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
 
-                sshagent(['test']) {
+                sshagent(credentials : ['test']) {
                     // Now you have SSH access to other machines using Jenkins user's credentials
 
                     sh "ssh ubuntu@10.0.18.137 'ls -al'"
