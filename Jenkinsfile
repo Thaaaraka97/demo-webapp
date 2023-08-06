@@ -61,19 +61,14 @@ pipeline {
                 // sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 // sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
 
-                withCredentials([
-                    sshUserPrivateKey(credentialsId: 'test', keyFileVariable: 'SSH_KEY', passphraseVariable: '', usernameVariable: 'USERNAME')
-                ]) {
-                    script {
-                        // Steps executed with the specified user's credentials and SSH private key
+                sshagent(['test']) {
+                    // Now you have SSH access to other machines using Jenkins user's credentials
 
-                        echo "This stage is running with the specified user"
-                        
-                        // Your steps that need to be run with a different user and SSH key go here
-                        sh "whoami"
-                        // sh "ssh -i \$SSH_KEY user@your-remote-host 'command-to-execute-on-remote-host'"
-                        }
-                    }
+                    sh "ssh ubuntu@10.0.30.43 'hostname'"
+                    // Add more SSH commands as needed
+                }
+
+                
             }
         }
     }
