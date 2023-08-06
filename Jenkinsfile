@@ -58,8 +58,12 @@ pipeline {
                 sh """
 
                 #!/bin/bash
-                ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.18.137 << EOF
+                ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.30.43 << EOF
                 hostname
+                sh 'sudo docker stop mynginx || true'
+                sh 'sudo docker rm mynginx || true'
+                sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 exit 0
                 << EOF
 
