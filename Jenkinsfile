@@ -7,9 +7,8 @@ pipeline {
         DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
 
-        TARGET_VM_IP = "ec2-99-79-39-233.ca-central-1.compute.amazonaws.com" // Replace with the IP of the target VM
-        SSH_USER = "ubuntu" // Replace with the SSH username on the target VM
-        // SSH_PRIVATE_KEY = credentials('ssh_private_key_id') // Add the Jenkins SSH private key credential ID
+        SSH_CREDENTIALS = credentials('test')
+        SSH_PRIVATE_KEY = SSH_CREDENTIALS_USR_PRIVATE_KEY
     }
 
     stages {
@@ -61,12 +60,9 @@ pipeline {
                 // sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 // sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
 
-                sshagent(credentials : ['test']) {
-                    // Now you have SSH access to other machines using Jenkins user's credentials
-
-                    sh "ssh ubuntu@10.0.18.137 'ls -al'"
-                    // Add more SSH commands as needed
-                }
+                sh '''
+                    ssh -o StrictHostKeyChecking=no -i "$SSH_PRIVATE_KEY" ubuntu@10.0.18.137 'echo Hello from the remote machine'
+                '''
 
                 
             }
