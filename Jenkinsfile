@@ -6,8 +6,6 @@ pipeline {
         DOCKER_IMAGE = "thaaaraka/custom_nginx_for_webapp" // Use the custom Nginx Docker image name
         DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
-
-        SSH_CREDENTIALS = credentials('test')
         
     }
 
@@ -50,19 +48,12 @@ pipeline {
             // }
             steps {
                 // SSH into the target VM and deploy the Nginx container                
-                
-
-                
 
                 // sh 'ssh -i .ssh/id_rsa 10.0.30.43'
                 // sh 'sudo docker stop mynginx || true'
                 // sh 'sudo docker rm mynginx || true'
                 // sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 // sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
-
-                withCredentials([sshUserPrivateKey(credentialsId: env.SSH_CREDENTIALS_ID, keyFileVariable: 'SSH_PRIVATE_KEY')]) {
-                    sh "ssh -o StrictHostKeyChecking=no -i \"$SSH_PRIVATE_KEY\" ubuntu@10.0.18.137 'hostname'"
-                }
 
                 
             }
