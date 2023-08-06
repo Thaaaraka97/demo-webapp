@@ -64,13 +64,16 @@ pipeline {
                 //     """
                 // }
 
-                sh 'whoami'
+                
 
-                sh 'ssh -i .ssh/id_rsa 10.0.30.43'
-                sh 'sudo docker stop mynginx || true'
-                sh 'sudo docker rm mynginx || true'
-                sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
-                sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                // sh 'ssh -i .ssh/id_rsa 10.0.30.43'
+                sh 'ssh ubuntu@10.0.30.43'
+                sh 'whoami'
+                sh 'hostname'
+                // sh 'sudo docker stop mynginx || true'
+                // sh 'sudo docker rm mynginx || true'
+                // sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                // sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
             }
         }
     }
