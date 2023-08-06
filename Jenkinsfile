@@ -8,7 +8,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
 
         SSH_CREDENTIALS = credentials('test')
-        SSH_PRIVATE_KEY = SSH_CREDENTIALS_USR_PRIVATE_KEY
+        
     }
 
     stages {
@@ -60,9 +60,9 @@ pipeline {
                 // sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 // sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
 
-                sh '''
-                    ssh -o StrictHostKeyChecking=no -i "$SSH_PRIVATE_KEY" ubuntu@10.0.18.137 'echo Hello from the remote machine'
-                '''
+                withCredentials([sshUserPrivateKey(credentialsId: env.SSH_CREDENTIALS_ID, keyFileVariable: 'SSH_PRIVATE_KEY')]) {
+                    sh "ssh -o StrictHostKeyChecking=no -i \"$SSH_PRIVATE_KEY\" ubuntu@10.0.18.137 'hostname'"
+                }
 
                 
             }
