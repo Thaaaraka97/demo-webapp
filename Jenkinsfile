@@ -55,6 +55,16 @@ pipeline {
                 // sh 'sudo docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 // sh 'sudo docker run -d -p 81:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
 
+                sh """
+
+                #!/bin/bash
+                sudo ssh -i .ssh/id_rsa 10.0.18.137 << EOF
+                hostname
+                exit 0
+                << EOF
+
+                """
+
                 
             }
         }
