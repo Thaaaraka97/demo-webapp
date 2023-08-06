@@ -64,7 +64,7 @@ pipeline {
                 sshagent(['test']) {
                     // Now you have SSH access to other machines using Jenkins user's credentials
 
-                    sh "ssh ubuntu@10.0.30.43 'hostname'"
+                    sh "ssh ubuntu@10.0.30.43 'ls -al'"
                     // Add more SSH commands as needed
                 }
 
