@@ -9,7 +9,7 @@ pipeline {
 
         TARGET_VM_IP = "ec2-99-79-39-233.ca-central-1.compute.amazonaws.com" // Replace with the IP of the target VM
         SSH_USER = "ubuntu" // Replace with the SSH username on the target VM
-        SSH_PRIVATE_KEY = credentials('ssh_private_key_id') // Add the Jenkins SSH private key credential ID
+        // SSH_PRIVATE_KEY = credentials('ssh_private_key_id') // Add the Jenkins SSH private key credential ID
     }
 
     stages {
