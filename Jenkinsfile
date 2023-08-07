@@ -42,7 +42,7 @@ pipeline {
                 sh 'docker stop mynginx || true'
                 sh 'docker rm mynginx || true'
 
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
 
                 // Deploy the newly built custom Nginx Docker image as an Nginx container
