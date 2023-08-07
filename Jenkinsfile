@@ -33,7 +33,9 @@ pipeline {
         }
 
         stage('Deploy to Nginx Container') {
-            steps {               
+            steps { 
+                sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.25.66'
+                sh 'hostname'
                 sh """
 
                 #!/bin/bash
