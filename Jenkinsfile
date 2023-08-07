@@ -7,7 +7,7 @@ pipeline {
         DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
         REMOTE_USER = "ubuntu"
-        REMOTE_IP = "35.183.98.124"
+        REMOTE_IP = "10.0.25.66"
         
         
     }
