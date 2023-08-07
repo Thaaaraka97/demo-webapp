@@ -39,6 +39,7 @@ pipeline {
                 
                 // SSH into the target VM and deploy the Nginx container 
                 // ssh ${REMOTE_USER}@${REMOTE_IP} << EOF
+                whoami
                 ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.25.66 << EOF
                 hostname
 
