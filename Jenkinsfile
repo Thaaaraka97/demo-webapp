@@ -34,30 +34,30 @@ pipeline {
 
         stage('Deploy to Nginx Container') {
             steps { 
-                // SSH into the target VM and deploy the Nginx container
-                sh 'ssh ${REMOTE_USER}@${REMOTE_IP}'
-                sh 'hostname'
+                // // SSH into the target VM and deploy the Nginx container
+                // sh 'ssh ${REMOTE_USER}@${REMOTE_IP}'
+                // sh 'hostname'
 
-                // Stop and remove the existing Nginx container
-                sh 'docker stop mynginx || true'
-                sh 'docker rm mynginx || true'
+                // // Stop and remove the existing Nginx container
+                // sh 'docker stop mynginx || true'
+                // sh 'docker rm mynginx || true'
 
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                // sh 'docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
 
-                // Deploy the newly built custom Nginx Docker image as an Nginx container
-                sh 'docker run -d -p 80:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
-                sh 'docker logout'
+                // // Deploy the newly built custom Nginx Docker image as an Nginx container
+                // sh 'docker run -d -p 80:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                // sh 'docker logout'
                 
-                // sh """
+                sh """
 
                 // #!/bin/bash
                 
-                // // SSH into the target VM and deploy the Nginx container 
-                // // ssh ${REMOTE_USER}@${REMOTE_IP} << EOF
-                // whoami
-                // ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.25.66 << EOF
-                // hostname
+                // SSH into the target VM and deploy the Nginx container 
+                // ssh ${REMOTE_USER}@${REMOTE_IP} << EOF
+                whoami
+                ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.25.66 << EOF
+                hostname
 
                 // // Stop and remove the existing Nginx container
                 // docker stop mynginx || true
@@ -70,9 +70,9 @@ pipeline {
                 // docker run -d -p 80:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}
                 // docker logout
                 // exit 0
-                // << EOF
+                << EOF
 
-                // """
+                """
 
                 
             }
