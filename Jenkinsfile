@@ -19,16 +19,7 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps {
-                // Build the custom Nginx Docker image using the provided Dockerfile
-                // script {
-                //     docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                //         def customImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}", " .")
-                //         customImage.push()
-                //     }
-                // }
-
-                
+            steps {               
                 sh 'docker build -t thaaaraka/custom_nginx_for_webapp:latest .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push thaaaraka/custom_nginx_for_webapp:latest'
