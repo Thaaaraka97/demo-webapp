@@ -38,7 +38,7 @@ pipeline {
                 #!/bin/bash
                 
                 // SSH into the target VM and deploy the Nginx container 
-                ssh ${REMOTE_USER}@${REMOTE_IP} << EOF
+                ssh ubuntu@10.0.25.66 << EOF
 
                 // Stop and remove the existing Nginx container
                 docker stop mynginx || true
