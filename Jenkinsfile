@@ -38,7 +38,7 @@ pipeline {
                 #!/bin/bash
                 
                 // SSH into the target VM and deploy the Nginx container 
-                ssh -i /var/lib/jenkins/.ssh/id_rsa ${REMOTE_USER}@${REMOTE_IP} << EOF
+                ssh ${REMOTE_USER}@${REMOTE_IP} << EOF
 
                 // Stop and remove the existing Nginx container
                 docker stop mynginx || true
