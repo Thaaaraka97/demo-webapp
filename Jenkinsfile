@@ -35,7 +35,7 @@ pipeline {
         stage('Deploy to Nginx Container') {
             steps { 
                 // SSH into the target VM and deploy the Nginx container
-                sh 'ssh ${REMOTE_USER}@${REMOTE_IP} hostname docker stop mynginx docker rm mynginx echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker pull ${DOCKER_IMAGE}:${DOCKER_TAG} docker run -d -p 80:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG} docker logout'
+                sh 'ssh ${REMOTE_USER}@${REMOTE_IP} hostname docker stop mynginx docker rm mynginx echo '$DOCKERHUB_CREDENTIALS_PSW' | docker login -u '$DOCKERHUB_CREDENTIALS_USR' --password-stdin docker pull ${DOCKER_IMAGE}:${DOCKER_TAG} docker run -d -p 80:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG} docker logout'
 
                 // // Stop and remove the existing Nginx container
                 // sh 'docker stop mynginx || true'
