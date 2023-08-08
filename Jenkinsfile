@@ -57,6 +57,9 @@ pipeline {
     }
 
     post {
+        always{
+            docker logout
+        }
         
         success {
             echo 'Deployment successful!'
