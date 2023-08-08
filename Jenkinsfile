@@ -50,6 +50,8 @@ pipeline {
 
                 sh """
                     hostname
+                    ssh ${REMOTE_USER}@${REMOTE_IP}
+                    hostname
                 """
 
 
