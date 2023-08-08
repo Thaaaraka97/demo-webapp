@@ -40,7 +40,7 @@ pipeline {
                 // Deploy the newly built custom Nginx Docker image as an Nginx container
                 
                 sh """                    
-                    ssh ${REMOTE_USER}@${REMOTE_IP} ' \                    
+                    ssh ${REMOTE_USER}@${REMOTE_IP} '                    
                         docker stop mynginx || true; \
                         docker rm mynginx || true; \
                         
