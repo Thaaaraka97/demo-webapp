@@ -53,10 +53,11 @@ pipeline {
                     
                     // SSH into the target VM and deploy the Nginx container 
                     ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.25.66 ' \
+                        hostname
                     
                         // Stop and remove the existing Nginx container
-                        docker stop mynginx || true; \
-                        docker rm mynginx || true; \
+                        // docker stop mynginx || true; \
+                        // docker rm mynginx || true; \
                         
                         // echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin; \
                         // docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}; \
