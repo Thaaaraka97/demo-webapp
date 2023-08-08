@@ -35,7 +35,10 @@ pipeline {
         stage('Deploy to Nginx Container') {
             steps { 
                 // SSH into the target VM and deploy the Nginx container
-                sh 'ssh ${REMOTE_USER}@${REMOTE_IP} hostname'
+                sh """
+                ssh ${REMOTE_USER}@${REMOTE_IP}
+                hostname
+                """
 
                 // // Stop and remove the existing Nginx container
                 // sh 'docker stop mynginx || true'
