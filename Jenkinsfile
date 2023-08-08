@@ -51,7 +51,7 @@ pipeline {
                 sh """
                     hostname
                     ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.25.66
-                    mkdir /home/ubuntu/testing_tharaka
+                    mkdir /var/lib/jenkins/testing_tharaka
                     hostname
                 """
 
