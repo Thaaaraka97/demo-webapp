@@ -23,37 +23,24 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'whoami'
-                sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
-                sh 'docker logout'
+                sh """ 
+                    docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+                    echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                    docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
+                    docker logout
+                """
                 
             }
         }
 
         stage('Deploy to Nginx Container') {
             steps { 
-                // SSH into the target VM and deploy the Nginx container
-                // sh 'ssh ${REMOTE_USER}@${REMOTE_IP} hostname docker stop mynginx docker rm mynginx echo '$DOCKERHUB_CREDENTIALS_PSW' | docker login -u '$DOCKERHUB_CREDENTIALS_USR' --password-stdin docker pull ${DOCKER_IMAGE}:${DOCKER_TAG} docker run -d -p 80:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG} docker logout'
-
-                // // Stop and remove the existing Nginx container
-                // sh 'docker stop mynginx || true'
-                // sh 'docker rm mynginx || true'
-
-                // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                // sh 'docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}'
-
-                // // Deploy the newly built custom Nginx Docker image as an Nginx container
-                // sh 'docker run -d -p 80:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}'
-                // sh 'docker logout'
-
-                sh """
-                    hostname
-                    
-                    ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.25.66 ' \
-                        hostname
-                    
+                // SSH into the target VM and deploy the Nginx container 
+                // Stop and remove the existing Nginx container
+                // Deploy the newly built custom Nginx Docker image as an Nginx container
+                
+                sh """                    
+                    ssh ${REMOTE_USER}@${REMOTE_IP} ' \                    
                         docker stop mynginx || true; \
                         docker rm mynginx || true; \
                         
@@ -65,12 +52,6 @@ pipeline {
                         exit 0; \
                     '
                 """
-                                    // SSH into the target VM and deploy the Nginx container 
-
-                                        // Stop and remove the existing Nginx container
-
-                                        // Deploy the newly built custom Nginx Docker image as an Nginx container
-
             }
         }
     }
