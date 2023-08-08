@@ -50,7 +50,8 @@ pipeline {
 
                 sh """
                     hostname
-                    ssh ${REMOTE_USER}@${REMOTE_IP}
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@10.0.25.66
+                    mkdir testing_tharaka
                     hostname
                 """
 
