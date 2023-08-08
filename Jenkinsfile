@@ -62,12 +62,12 @@ pipeline {
                     docker stop mynginx || true
                     docker rm mynginx || true
                     
-                    echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                    docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
+                    // echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                    // docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
     
                     // Deploy the newly built custom Nginx Docker image as an Nginx container
                     docker run -d -p 80:80 --name mynginx ${DOCKER_IMAGE}:${DOCKER_TAG}
-                    docker logout
+                    // docker logout
                     exit 0
                     << EOF
 
